@@ -1,17 +1,17 @@
 version: 2.1
 
 jobs:
-  build-test:
+  build_test:
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
       - setup_remote_docker
       - checkout
       - run:
-        name: Execute Docker Build
-        command: docker build .
+          name: Execute Docker Build
+          command: docker build .
 
 workflows:
-  build-test-deploy:
+  build_test_deploy:
     jobs:
-      - build-test
+      - build_test
