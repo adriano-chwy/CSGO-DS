@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 LABEL MAINTAINER="Adriano Soares (adrianojsoares1@gmail.com)"
 
 # Update and Install Dependencies (According to Valve Documentation)
-RUN apt-get update
+RUN apt-get update \
     && apt-get --yes install \
 	    curl \
 	    lib32gcc1 \
@@ -11,10 +11,10 @@ RUN apt-get update
 
 USER steam
 
-RUN mkdir ~/SteamCLI
+RUN mkdir ~/SteamCLI \
     && cd ~/SteamCLI \
-	&& curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
-	&& apt-get remove --purge -y curl
+	&& curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf - \
+	&& apt-get remove --purge -y curl \
     && apt-get clean autoclean \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
