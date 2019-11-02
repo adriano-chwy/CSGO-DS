@@ -1,0 +1,21 @@
+version: 2.1
+
+jobs:
+  build-test:
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - run:
+        name: Execute Docker Build
+        command: docker build .
+
+workflows:
+  build-test-deploy:
+    jobs:
+      - build-test:
+        filters:
+          branches:
+            only:
+              - master
+              - develop
