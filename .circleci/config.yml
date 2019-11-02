@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Execute Docker Build
-          command: docker build .
+          command: cd docker && docker build .
 
 workflows:
   build_test_deploy:
