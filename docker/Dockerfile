@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 LABEL MAINTAINER="asoares1@chewy.com"
 
 # Define variables
-ARG CSGO_APP_ID=740
+ARG CSGO_APP_ID
 ARG CLI_USER_NAME=anonymous
 ARG CLI_USER_PASS
 
@@ -48,3 +48,4 @@ COPY --chown=steam server_config/ csgods/csgo/cfg/
 
 ENTRYPOINT ['csgods/srdcs_run', 'srcds', '-game csgo', '-console', '-usercon', '+mapgroup mg_active', '+map de_dust2']
 
+EXPOSE 27015 27020 27005 26900 51840
