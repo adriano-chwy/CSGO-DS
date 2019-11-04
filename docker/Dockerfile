@@ -1,12 +1,13 @@
 FROM ubuntu:bionic
 
-LABEL MAINTAINER="Adriano Soares (asoares1@chewy.com)"
+LABEL MAINTAINER="asoares1@chewy.com"
 
+# Define variables
+ARG CSGO_APP_ID=740
 ARG CLI_USER_NAME=anonymous
-
 ARG CLI_USER_PASS
 
-# Update and Install Dependencies (According to Valve Documentation)
+# Update and Install Dependencies required for CLI + game install
 RUN apt-get update && apt-get --yes install \
     curl \
     lib32gcc1 \
@@ -25,15 +26,25 @@ RUN apt-get remove --purge --yes curl \
     && apt-get autoremove --yes \
     && rm -rf /var/lib/apt/lists/*
 
+# Switch away from root user, recommended by Valve for installation
 USER steam
 
+# Set working directory to dir containing ./steamcmd.sh
 WORKDIR /home/steam/SteamCLI
 
-RUN mkdir csgo \
+# Install the CS:GO dedicated game server
+# WARNING: This takes a lot of space (~22GB+)
+RUN mkdir csgods \
     && ./steamcmd.sh <<SERVERINSTALL \
         +login $CLI_USER_NAME $CLI_USER_PASS \
         +force_install_dir csgo/ \
-        +app_update 740 validate \
+        +app_update $CSGO_APP_ID validate \
         +quit \
     SERVERINSTALL \
     && echo Successfully installed and verified the integrity of CS:GO Dedicated Server.
+
+# Load server configurations into game files
+COPY --chown=steam server_config/ csgods/csgo/cfg/
+
+ENTRYPOINT ['csgods/srdcs_run', 'srcds', '-game csgo', '-console', '-usercon', '+mapgroup mg_active', '+map de_dust2']
+
