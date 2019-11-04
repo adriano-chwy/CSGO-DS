@@ -33,8 +33,12 @@ Options in `server.cfg` are sourced each time a new map loads.
 #### `gamemode_x_server.cfg`
 Options in `gamemode_x_server.cfg` are sourced independently for each game mode and load after `server.cfg`.
 + Use this file for cvars specific to a game mode.
++ Replace 'x' with the name of the game mode - ex: `gamemode_competitive_server.cfg`, `gamemode_deathmatch_server.cfg`.
 + Some examples might be `mp_roundtime`, `mp_buytime`.
 
-### Running the Server
+### Running the Server Locally
+Running locally is easy using docker compose!
+
+`docker compose up`
 
 <p align="center"><img src="https://1000logos.net/wp-content/uploads/2017/12/CSGO-Logo.png" alt="a cute dog" height="300"/></p>
