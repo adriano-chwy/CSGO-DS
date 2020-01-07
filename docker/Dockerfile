@@ -37,7 +37,7 @@ WORKDIR /home/steam/SteamCLI
 RUN mkdir csgods \
     && ./steamcmd.sh <<SERVERINSTALL \
         +login $CLI_USER_NAME $CLI_USER_PASS \
-        +force_install_dir csgo/ \
+        +force_install_dir csgods/ \
         +app_update $CSGO_APP_ID validate \
         +quit \
     SERVERINSTALL \
@@ -46,6 +46,7 @@ RUN mkdir csgods \
 # Load server configurations into game files
 COPY --chown=steam server_config/ csgods/csgo/cfg/
 
+# Run the server
 ENTRYPOINT ['csgods/srdcs_run', 'srcds', '-game csgo', '-console', '-usercon', '+mapgroup mg_active', '+map de_dust2']
 
 EXPOSE 27015 27020 27005 26900 51840
