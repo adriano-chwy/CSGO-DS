@@ -47,6 +47,6 @@ RUN mkdir csgods \
 COPY --chown=steam server_config/ csgods/csgo/cfg/
 
 # Run the server
-ENTRYPOINT ['csgods/srdcs_run', 'srcds', '-game csgo', '-console', '-usercon', '+mapgroup mg_active', '+map de_dust2']
+ENTRYPOINT ['csgods/srdcs_run', '-game csgo', '-console', '-usercon']
 
 EXPOSE 27015 27020 27005 26900 51840
