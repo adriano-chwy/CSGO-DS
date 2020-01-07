@@ -1,4 +1,4 @@
-version: 3.7
+version: "3.7"
 
 services:
   csgo-server:
@@ -15,5 +15,3 @@ services:
       - "27005:27005"
       - "26900:26900"
       - "51840:51840"
-    deploy:
-      replicas: 1
