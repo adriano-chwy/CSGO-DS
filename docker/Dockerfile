@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM debian:buster-slim
 
 LABEL MAINTAINER="asoares1@chewy.com"
 
@@ -10,6 +10,7 @@ ARG CLI_USER_PASS
 # Update and Install Dependencies required for CLI + game install
 RUN apt-get update && apt-get --yes install \
     curl \
+    dumb-init \
     lib32gcc1 \
     lib32stdc++6
 
@@ -46,7 +47,15 @@ RUN mkdir csgods \
 # Load server configurations into game files
 COPY --chown=steam server_config/ csgods/csgo/cfg/
 
-# Run the server
-ENTRYPOINT ['csgods/srdcs_run', '-game csgo', '-console', '-usercon']
+# The Steam Login Token used to run this server. Register at <https://steamcommunity.com/dev/managegameservers>
+ENV SRCDS_LOGIN_TOKEN 0
+# The RCON admin remote access password
+ENV SV_RCON_PASSWORD ""
+# The Server Password
+ENV SV_PASSWORD ""
+
+COPY --chown=steam /docker/docker-entrypoint.sh .
+
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "./docker-entrypoint.sh"]
 
 EXPOSE 27015 27020 27005 26900 51840

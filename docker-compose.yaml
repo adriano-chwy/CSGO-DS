@@ -7,8 +7,12 @@ services:
       dockerfile: docker/Dockerfile
       args:
         - CSGO_APP_ID=740
-        - CLI_USER_NAME=$STEAM_CLI_USER_NAME
-        - CLI_USER_PASS=$STEAM_CLI_USER_PASS
+        - CLI_USER_NAME=${STEAM_CLI_USER_NAME}
+        - CLI_USER_PASS=${STEAM_CLI_USER_PASSWORD}
+    environment:
+      - SRCDS_LOGIN_TOKEN=${STEAM_SRCDS_LOGIN_TOKEN}
+      - SV_RCON_PASSWORD=${STEAM_SV_RCON_PASSWORD}
+      - SV_PASSWORD=${STEAM_SV_PASSWORD}
     ports:
       - "27015:27015"
       - "27020:27020"
