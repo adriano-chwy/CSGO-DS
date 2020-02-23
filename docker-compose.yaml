@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        - CSGO_APP_ID=740
+        - APP_ID=740
         - CLI_USER_NAME=${STEAM_CLI_USER_NAME}
         - CLI_USER_PASS=${STEAM_CLI_USER_PASSWORD}
     environment:
